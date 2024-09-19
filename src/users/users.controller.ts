@@ -14,7 +14,9 @@ import { Public } from "../decorators/public.decorator";
 @ApiTags("users")
 @Controller("users")
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+		private usersService: UsersService
+	) { }
 
   @Public()
   @ApiOperation({ summary: "Crear un nuevo usuario" })

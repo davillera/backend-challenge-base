@@ -12,7 +12,7 @@ export function configureSwagger(app: INestApplication): void {
         scheme: "bearer",
         bearerFormat: "JWT",
       },
-      "JWT-auth", // Nombre del esquema de autenticación
+      "JWT-auth",
     )
     .build();
 

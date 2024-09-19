@@ -1,4 +1,63 @@
-import { Controller } from '@nestjs/common';
+import {Controller, Post, Body, Delete, Get} from '@nestjs/common';
+import {FavoritesService} from "./favorites.service";
+import {ApiBearerAuth, ApiBody, ApiOperation, ApiQuery, ApiTags} from "@nestjs/swagger";
 
+
+@ApiTags("favorites")
+@ApiBearerAuth('JWT-auth')
 @Controller('favorites')
-export class FavoritesController {}
+export class FavoritesController {
+
+	constructor(
+		private favoriteService: FavoritesService
+	) { }
+
+
+	@Post()
+	@ApiOperation({ summary: 'Añadir película a favoritos' })
+	@ApiBody({
+		schema: {
+			type: 'object',
+			properties: {
+				movieId: { type: 'string', description: 'ID de la película' },
+				userId: { type: 'string', description: 'ID del usuario' },
+			},
+			required: ['movieId', 'userId'],
+		},
+	})
+	async addFavorite(@Body() body: { movieId: string; userId: string }) {
+		const { movieId, userId } = body;
+		return this.favoriteService.addFavorite(userId, movieId);
+	}
+
+	@Get()
+	@ApiOperation({ summary: 'Obtener las películas favoritas de un usuario' })
+	@ApiQuery({
+		name: 'userId',
+		type: 'string',
+		description: 'ID del usuario',
+		required: true,
+	})
+	async getFavorites(@Body() body: { userId: string }) {
+		const { userId } = body;
+		return this.favoriteService.getFavorites(userId);
+	}
+
+
+	@Delete()
+	@ApiOperation({ summary: 'Eliminar película de favoritos' })
+	@ApiBody({
+		schema: {
+			type: 'object',
+			properties: {
+				movieId: { type: 'string', description: 'ID de la película' },
+				userId: { type: 'string', description: 'ID del usuario' },
+			},
+			required: ['movieId', 'userId'],
+		},
+	})
+	async removeFavorite(@Body() body: { movieId: string; userId: string }) {
+		const { movieId, userId } = body;
+		return this.favoriteService.removeFavorite(userId, movieId);
+	}
+}

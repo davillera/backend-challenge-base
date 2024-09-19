@@ -6,6 +6,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { UsersModule } from "src/users/users.module";
 import { AuthModule } from "../auth/auth.module";
 import { ConfigModule } from "@nestjs/config";
+import {FavoritesModule} from "../favorites/favorites.module";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ dotenv.config();
     }),
     AuthModule,
     UsersModule,
+		FavoritesModule
   ],
   controllers: [AppController],
   providers: [AppService],
