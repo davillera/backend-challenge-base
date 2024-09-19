@@ -3,10 +3,10 @@ import { AppModule } from "./app/app.module";
 import { configureSwagger } from "./swagger/swagger.config";
 import { JwtAuthGuard } from "./jwt/jwtauth.guard";
 
-
 async function bootstrap(): Promise<void> {
 
   const app = await NestFactory.create(AppModule);
+	app.enableCors();
   const reflector = app.get(Reflector);
   app.useGlobalGuards(new JwtAuthGuard(reflector));
   configureSwagger(app);
@@ -16,11 +16,8 @@ async function bootstrap(): Promise<void> {
   }
   await app.listen(parseInt(process.env.PORT ?? '3000', 10),);
 
-	app.enableCors({
-		origin: '*',
-		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-		credentials: true,
-	});
+
+
   
 
 }
