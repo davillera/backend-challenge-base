@@ -16,9 +16,11 @@ async function bootstrap(): Promise<void> {
   }
   await app.listen(parseInt(process.env.PORT ?? '3000', 10),);
 
-  app.enableCors({
-    origin: '*',
-  });
+	app.enableCors({
+		origin: '*',
+		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+		credentials: true,
+	});
   
 
 }
