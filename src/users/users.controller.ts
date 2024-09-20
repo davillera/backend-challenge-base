@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Put, Param, Delete, Body } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import { CreateUserDto } from "./dto/create-user.dto";
+import { UserDto } from "./dto/user.dto";
 import {
   ApiBearerAuth,
   ApiBody,
@@ -23,7 +23,7 @@ export class UsersController {
   @ApiResponse({ status: 201, description: "Usuario creado exitosamente." })
   @ApiResponse({ status: 409, description: "El email ya está en uso." })
   @Post("register")
-  async create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: UserDto) {
     return this.usersService.create(createUserDto);
   }
 
@@ -88,8 +88,8 @@ export class UsersController {
   @ApiResponse({ status: 200, description: "Usuario actualizado correctamente." })
   @ApiResponse({ status: 404, description: "Usuario no encontrado." })
   @ApiParam({ name: "id", description: "ID del usuario", example: "1234" })
-  @ApiBody({ description: "Datos para actualizar el usuario", type: CreateUserDto })
-  async updateUser(@Param("id") id: string, @Body() updateUserDto: Partial<CreateUserDto>) {
+  @ApiBody({ description: "Datos para actualizar el usuario", type: UserDto })
+  async updateUser(@Param("id") id: string, @Body() updateUserDto: Partial<UserDto>) {
     return this.usersService.update(id, updateUserDto);
   }
 

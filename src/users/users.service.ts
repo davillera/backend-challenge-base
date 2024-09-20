@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository, IsNull, Not } from "typeorm";
 import { User } from "./user.entity";
-import type { CreateUserDto } from "./dto/create-user.dto";
+import type { UserDto } from "./dto/user.dto";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 
@@ -26,7 +26,7 @@ export class UsersService {
     this.jwtSecret = process.env.JWT_SECRET;
   }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: UserDto): Promise<User> {
     const existingUser = await this.userRepository.findOne({
       where: { email: createUserDto.email },
     });
@@ -89,7 +89,7 @@ export class UsersService {
     return this.userRepository.find({ where: { deletedAt: Not(IsNull()) } });
   }
 
-  async update(id: string, updateUserDto: Partial<CreateUserDto>) {
+  async update(id: string, updateUserDto: Partial<UserDto>) {
     const user = await this.userRepository.preload({
       id,
       ...updateUserDto,
