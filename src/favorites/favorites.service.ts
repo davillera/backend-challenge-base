@@ -32,6 +32,7 @@ export class FavoritesService {
 		await this.favoriteRepository.save(favorite);
 		return {
 			message: 'Película añadida a favoritos exitosamente',
+			userid: user,
 			movieId: favorite.movieId,
 		};
 	}
