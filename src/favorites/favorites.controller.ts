@@ -1,4 +1,4 @@
-import {Controller, Post, Body, Delete, Get} from '@nestjs/common';
+import {Controller, Post, Body, Delete, Get, Query} from '@nestjs/common';
 import {FavoritesService} from "./favorites.service";
 import {ApiBearerAuth, ApiBody, ApiOperation, ApiQuery, ApiTags} from "@nestjs/swagger";
 import {UserDto} from "./dto/favorite.dto";
@@ -40,8 +40,7 @@ export class FavoritesController {
 		description: 'ID del usuario',
 		required: true,
 	})
-	async getFavorites(@Body() body: { userId: string }) {
-		const { userId } = body;
+	async getFavorites(@Query('userId') userId: string) {
 		return this.favoriteService.getFavorites(userId);
 	}
 
