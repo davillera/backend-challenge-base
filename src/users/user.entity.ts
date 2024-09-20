@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany} from "typeorm";
+import {Favorite} from "../favorites/favorite.entity";
 
 @Entity()
 export class User {
@@ -16,4 +17,7 @@ export class User {
 
   @Column({ type: "timestamp", nullable: true })
   deletedAt?: Date;
+
+	@OneToMany(() => Favorite, (favorite) => favorite.user)
+	favorites?: Favorite[];
 }

@@ -1,15 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { User } from '../users/user.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import {User} from "../users/user.entity";
 
 @Entity()
 export class Favorite {
-	@PrimaryGeneratedColumn('uuid')
+	@PrimaryGeneratedColumn("uuid")
 	id?: string;
 
-	@Column({nullable: false})
+	@Column()
 	movieId?: string;
 
-	@ManyToOne(() => User)
+	@ManyToOne(() => User, (user) => user.favorites)
 	user?: User;
-
 }
